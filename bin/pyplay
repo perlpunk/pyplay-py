@@ -7,9 +7,9 @@ import pyplay
 path = pyplay.__file__
 if path[-4:] == '.pyc':
     path = path[0:-1]
-print path
+print(path)
 
 os.environ['PYTHONSTARTUP'] = path
 os.environ['_PYPLAY_ARGV'] = ' '.join(sys.argv[1:])
 
-os.execv(sys.executable, [''])
+os.execv(sys.executable, sys.argv)

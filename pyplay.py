@@ -46,7 +46,7 @@ class PyPlay():
         try:
             import readline
         except ImportError:
-            print "Module readline not available."
+            print("Module readline not available.")
         else:
             import rlcompleter
             readline.parse_and_bind("tab: complete")
@@ -83,15 +83,15 @@ Full documentation: http://pypi.python.org/pypi/pyplay/
         l = locals()
 
         def h():
-            print pyplay.help(l)
+            print(pyplay.help(l))
 
         def y(object):
             import yaml
-            print yaml.dump(
+            print(yaml.dump(
                 object,
                 default_flow_style=False,
                 explicit_start=True
-            ),
+            )),
 
         globals().update({'h': h, 'y': y})
 
@@ -99,14 +99,14 @@ Full documentation: http://pypi.python.org/pypi/pyplay/
 
         pyplay.set_pythonpath()
 
-        print '*** Welcome to PyPlay version %s -- Type h() for help.' % (
-            __version__,)
+        print('*** Welcome to PyPlay version %s -- Type h() for help.' % (
+            __version__,))
 
         if pyplay.config.CONFIG_FILE:
-            print "*** PyPlay config file: '%s'" % pyplay.config.CONFIG_FILE
+            print("*** PyPlay config file: '%s'" % pyplay.config.CONFIG_FILE)
 
         if pyplay.config.readline:
-            print '*** PyPlay tab completion enabled'
+            print('*** PyPlay tab completion enabled')
             pyplay.init_readline()
 
         del globals()['os']
@@ -115,8 +115,8 @@ Full documentation: http://pypi.python.org/pypi/pyplay/
         del globals()['PyPlay']
 
         for command in pyplay.config.commands:
-            print '>>> %s' % command
-            exec command in globals()
+            print('>>> %s' % command)
+            exec(command, globals())
 
     class Config():
         dir = os.path.expanduser('~/.pyplay')
@@ -149,7 +149,7 @@ Full documentation: http://pypi.python.org/pypi/pyplay/
 
             if self.CONFIG_FILE:
                 import yaml
-                config = yaml.load(file(self.CONFIG_FILE, 'r'))
+                config = yaml.load(open(self.CONFIG_FILE, 'r'))
                 self.__dict__.update(config)
 
 
