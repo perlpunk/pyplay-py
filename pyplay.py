@@ -85,15 +85,36 @@ Full documentation: http://pypi.python.org/pypi/pyplay/
         def h():
             print(pyplay.help(l))
 
+        def config():
+            y(pyplay.config)
+
         def y(object):
             import yaml
-            print(yaml.dump(
+            yaml_dump = yaml.dump(
                 object,
                 default_flow_style=False,
                 explicit_start=True
-            )),
+            )
+            output = False
+            if pyplay.config.highlight_yaml:
+                try:
+                    import pipes
+                    t = pipes.Template()
+                    t.append(pyplay.config.highlight_yaml, '--')
+                    # TODO
+                    f = t.open('/tmp/pipefile-pyplay', 'w')
+                    f.write(yaml_dump)
+                    f.close()
+                    highlighted = open('/tmp/pipefile-pyplay').read()
+                    print(highlighted)
+                    output = True
+                except err:
+                    print(format(err))
 
-        globals().update({'h': h, 'y': y})
+            if not output:
+                print(yaml_dump)
+
+        globals().update({'h': h, 'y': y, 'config': config})
 
         pyplay = PyPlay()
 
@@ -146,6 +167,7 @@ Full documentation: http://pypi.python.org/pypi/pyplay/
                 'sys',
                 're',
             ]
+            self.highlight_yaml = None
 
             if self.CONFIG_FILE:
                 import yaml
