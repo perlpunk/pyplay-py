@@ -13,8 +13,8 @@ class TestCase(unittest.TestCase):
 
     def assertTextEquals(self, got, expected, msg=None):
         if got != expected:
-            file('expected', 'w').write(expected)
-            file('got', 'w').write(got)
+            open('expected', 'w').write(expected)
+            open('got', 'w').write(got)
             os.system('diff -u expected got')
 
         self.assertEquals(got, expected, msg)
